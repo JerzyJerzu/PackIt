@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
@@ -15,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Trip> trips;
     private ListView TripsList;
-    private Button CreateTrip;
     private ArrayAdapter<Trip> tripsAdapter;
+    private FloatingActionButton CreateTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,19 +33,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                //additem(view);
+                additem(view);
             }
         });
-
         trips = new ArrayList<Trip>();
         //to read about that:
         tripsAdapter = new ArrayAdapter<Trip>(this, android.R.layout.simple_list_item_1);
         TripsList.setAdapter(tripsAdapter);
-
     }
 
     private void additem(View view)
     {
-        //tripsAdapter.add(new Trip("inrxekqlnqxrvkqlxnvkceqqcqc"));
+        setContentView(R.layout.activity_edit_trip);
+        tripsAdapter.add(new Trip("inrxekqlnqxrvkqlxnvkceqqcqc"));
     }
 }
