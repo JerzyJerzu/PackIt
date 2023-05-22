@@ -6,17 +6,59 @@
     android:layout_height="match_parent">
 
     <View
-        android:id="@+id/dividerTrip"
+        android:id="@+id/dividerItem"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.321"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintVertical_bias="0.19999999"
+        tools:layout_editor_absoluteX="-9dp" />
+
+    <EditText
+        android:id="@+id/ItemDecription"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="ENTER DESCRIPTION HERE..."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dividerItem" />
+
+    <TextView
+        android:id="@+id/Relations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="Choose Relations:"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ItemDecription" />
+
+    <ListView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/applyItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Relations" />
 
     <Button
-        android:id="@+id/applyTrip"
+        android:id="@+id/applyItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -29,11 +71,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dividerTrip"
+        app:layout_constraintTop_toBottomOf="@+id/dividerItem"
         app:layout_constraintVertical_bias="1.0" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/EditTripToolbar"
+        android:id="@+id/EditItemToolbar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="#1D7746"
@@ -43,7 +85,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/back2main"
+        android:id="@+id/back2trip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -52,15 +94,15 @@
         android:layout_marginBottom="10dp"
         android:clickable="true"
         app:backgroundTint="#B4B6B2"
-        app:layout_constraintBottom_toBottomOf="@+id/EditTripToolbar"
-        app:layout_constraintEnd_toEndOf="@+id/EditTripToolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/EditItemToolbar"
+        app:layout_constraintEnd_toEndOf="@+id/EditItemToolbar"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/EditTripToolbar"
+        app:layout_constraintTop_toTopOf="@+id/EditItemToolbar"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <Button
-        android:id="@+id/deleteTrip"
+        android:id="@+id/deleteItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -70,41 +112,45 @@
         android:text="Delete"
         android:textColor="#E61B1B"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/EditTripToolbar"
-        app:layout_constraintEnd_toEndOf="@+id/EditTripToolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/EditItemToolbar"
+        app:layout_constraintEnd_toEndOf="@+id/EditItemToolbar"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/EditTripToolbar"
-        app:layout_constraintTop_toTopOf="@+id/EditTripToolbar" />
+        app:layout_constraintStart_toStartOf="@+id/EditItemToolbar"
+        app:layout_constraintTop_toTopOf="@+id/EditItemToolbar" />
 
     <TextView
-        android:id="@+id/editRelation"
+        android:id="@+id/editItem"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:text="edit trip"
+        android:text="edit item"
         android:textColor="@color/white"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/EditTripToolbar"
-        app:layout_constraintEnd_toStartOf="@+id/deleteTrip"
+        app:layout_constraintBottom_toBottomOf="@+id/EditItemToolbar"
+        app:layout_constraintEnd_toStartOf="@+id/deleteItem"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/back2main"
-        app:layout_constraintTop_toTopOf="@+id/EditTripToolbar"
+        app:layout_constraintStart_toEndOf="@+id/back2trip"
+        app:layout_constraintTop_toTopOf="@+id/EditItemToolbar"
         app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/ItemNameInput"
-        android:layout_width="354dp"
-        android:layout_height="75dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
         android:ems="10"
         android:inputType="text"
-        android:text="ENTER TRIP NAME HERE..."
-        app:layout_constraintBottom_toTopOf="@+id/dividerTrip"
+        android:text="ENTER ITEM NAME HERE..."
+        app:layout_constraintBottom_toTopOf="@+id/dividerItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTripToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/EditItemToolbar"
         app:layout_constraintVertical_bias="0.474" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
