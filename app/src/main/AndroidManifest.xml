@@ -21,6 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AcitivityEditTrip" />
+        <activity android:name=".AcitivityEditItem" />
+        <activity android:name=".AcitivityEditRelation" />
+        <activity android:name=".AcitivityInsideTrip" />
+        <activity android:name=".AcitivitySeeRelation" />
     </application>
 
 </manifest>

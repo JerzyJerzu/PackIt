@@ -2,6 +2,8 @@ package com.example.packit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<Trip> tripsAdapter;
     private FloatingActionButton CreateTrip;
 
+    //@SuppressLint("MissingInflatedId")  //what is this?
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +36,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                additem(view);
+                Intent intent = new Intent(MainActivity.this, AcitivityEditTrip.class);
+                startActivity(intent);
             }
         });
+
         trips = new ArrayList<Trip>();
         //to read about that:
         tripsAdapter = new ArrayAdapter<Trip>(this, android.R.layout.simple_list_item_1);
@@ -47,4 +52,5 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_trip);
         tripsAdapter.add(new Trip("inrxekqlnqxrvkqlxnvkceqqcqc"));
     }
+
 }

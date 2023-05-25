@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/back2main"
+        android:id="@+id/back2tripT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -77,7 +77,7 @@
         app:layout_constraintTop_toTopOf="@+id/EditTripToolbar" />
 
     <TextView
-        android:id="@+id/editRelation"
+        android:id="@+id/editTripText"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
@@ -89,12 +89,12 @@
         app:layout_constraintBottom_toBottomOf="@+id/EditTripToolbar"
         app:layout_constraintEnd_toStartOf="@+id/deleteTrip"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/back2main"
+        app:layout_constraintStart_toEndOf="@+id/back2tripT"
         app:layout_constraintTop_toTopOf="@+id/EditTripToolbar"
         app:layout_constraintVertical_bias="1.0" />
 
     <EditText
-        android:id="@+id/ItemNameInput"
+        android:id="@+id/TripNameInput"
         android:layout_width="354dp"
         android:layout_height="75dp"
         android:ems="10"
