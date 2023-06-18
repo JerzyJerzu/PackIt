@@ -1,10 +1,15 @@
 package com.example.packit;
 
+import java.util.ArrayList;
+
 public class Trip {
+    public static ArrayList<Trip> tripsArrayList = new ArrayList<>();
+    private int ID;
     private String name;
 
-    public Trip(String name)
+    public Trip(int ID, String name)
     {
+        this.ID = ID;
         this.name = name;
     }
 
@@ -15,5 +20,9 @@ public class Trip {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getID() {
+        return ID;
     }
 }

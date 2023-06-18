@@ -16,20 +16,18 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
-    private ArrayList<Trip> trips;
-    private ListView TripsList;
-    private ArrayAdapter<Trip> tripsAdapter;
+    private ListView TripsListView;
     private FloatingActionButton CreateTrip;
-
-    //@SuppressLint("MissingInflatedId")  //what is this?
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TripsList = findViewById(R.id.TripsList);
+        TripsListView = findViewById(R.id.TripsList);
         CreateTrip = findViewById(R.id.CreateTrip);
+
+        setTripAdapter();
+        loadFromDBToMemory();
 
         CreateTrip.setOnClickListener(new View.OnClickListener()
         {
@@ -40,17 +38,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        trips = new ArrayList<Trip>();
-        //to read about that:
-        tripsAdapter = new ArrayAdapter<Trip>(this, android.R.layout.simple_list_item_1);
-        TripsList.setAdapter(tripsAdapter);
     }
-
-    private void additem(View view)
+    private void setTripAdapter()
     {
-        setContentView(R.layout.activity_edit_trip);
-        tripsAdapter.add(new Trip("inrxekqlnqxrvkqlxnvkceqqcqc"));
+        TripAdapter tripAdapter = new TripAdapter(getApplicationContext(), Trip.tripsArrayList);
+        TripsListView.setAdapter(tripAdapter);
     }
-
+    private void loadFromDBToMemory()
+    {
+        DatabaseHelper dbHelper = DatabaseHelper.instanceOfDatabase(this);
+        dbHelper.populateTripsListArray();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTripAdapter();
+    }
 }
