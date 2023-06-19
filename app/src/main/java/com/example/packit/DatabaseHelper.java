@@ -18,6 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_TAGS = "tags";
     private static final String TAG_ID = "_id";
+    private static final String TAG_TRIP_ID = "trip_id";
     private static final String TAG_NAME = "name";
     private static final String TAG_DESCRIPTION = "description";
 
@@ -45,9 +46,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db)
     {
+        initialiseTables(db);
+    }
+    private void initialiseTables(SQLiteDatabase db)
+    {
         String createTableQuery = "CREATE TABLE " + TABLE_TRIPS + "("
-        + TRIPS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-        + TRIPS_NAME + " TEXT" + ")";
+                + TRIPS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + TRIPS_NAME + " TEXT" + ")";
+        db.execSQL(createTableQuery);
+
+        createTableQuery = "CREATE TABLE " + TABLE_TAGS + "("
+                + TAG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + TAG_TRIP_ID + " INTEGER,"
+                + TAG_NAME + " TEXT,"
+                + TAG_DESCRIPTION + " TEXT" + ")";
+        db.execSQL(createTableQuery);
+
+        createTableQuery = "CREATE TABLE " + TABLE_JUNCTION + "("
+                + JUNCTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + JUNCTION_TAG_ID + " INTEGER,"
+                + JUNCTION_ITEM_ID + " INTEGER" + ")";
+        db.execSQL(createTableQuery);
+
+        createTableQuery = "CREATE TABLE " + TABLE_ITEMS + "("
+                + ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + ITEM_NAME + " TEXT,"
+                + ITEM_DESCRIPTION + " TEXT" + ")";
         db.execSQL(createTableQuery);
     }
     @Override
@@ -63,6 +87,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(TRIPS_NAME, trip.toString());
 
         db.insert(TABLE_TRIPS, null, values);
+    }
+    public void addNewTag(Tag tag)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TAG_ID, tag.getID());
+        values.put(TAG_TRIP_ID, tag.getTripID());
+        values.put(TAG_NAME, tag.getName());
+        values.put(TAG_DESCRIPTION, tag.getDescription());
+
+        db.insert(TABLE_TAGS, null, values);
+    }
+    public void addJunction(Tag tag, Item item)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(JUNCTION_TAG_ID, tag.getID());
+        values.put(JUNCTION_ITEM_ID, item.getID());
+
+        db.insert(TABLE_JUNCTION, null, values);
+    }
+    public void addNewItem(Item item)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ITEM_ID, item.getID());
+        values.put(ITEM_NAME, item.getName());
+        values.put(ITEM_DESCRIPTION, item.getDescription());
+
+        db.insert(TABLE_ITEMS, null, values);
     }
     public void updateTripInDB(Trip selectedTrip)
     {

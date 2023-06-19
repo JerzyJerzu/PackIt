@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Trip {
     public static ArrayList<Trip> tripsArrayList = new ArrayList<>();
+    public ArrayList<Item> TripItemsArrayList;
+    public ArrayList<Tag> TagsArrayList;
     public static String TRIP_EDIT_EXTRA = "tripEdit";
     private int ID;
     private String name;
@@ -12,6 +14,8 @@ public class Trip {
     {
         this.ID = ID;
         this.name = name;
+        TagsArrayList = new ArrayList<>();
+        TripItemsArrayList = new ArrayList<>();
     }
 
     public String toString ()
