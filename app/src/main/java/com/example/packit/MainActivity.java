@@ -2,26 +2,20 @@ package com.example.packit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-
-//aaaa
 
 public class MainActivity extends AppCompatActivity {
     private ListView TripsListView;
     private FloatingActionButton CreateTrip;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -30,16 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         setTripAdapter();
         loadFromDBToMemory();
-
-        CreateTrip.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(MainActivity.this, AcitivityEditTrip.class);
-                startActivity(intent);
-            }
-        });
+        setOnClickListeners();
     }
     private void setTripAdapter()
     {
@@ -56,4 +41,28 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         setTripAdapter();
     }
+    private void setOnClickListeners()
+    {
+        TripsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+            {
+                Trip selectedTrip = (Trip) TripsListView.getItemAtPosition(position);
+                Intent editTripIntent = new Intent(getApplicationContext(), AcitivityInsideTrip.class);
+                editTripIntent.putExtra(Trip.TRIP_EDIT_EXTRA, selectedTrip.getID());
+                startActivity(editTripIntent);
+            }
+        });
+        CreateTrip.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(MainActivity.this, AcitivityEditTrip.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 }

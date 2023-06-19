@@ -10,38 +10,90 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class AcitivityEditTrip extends AppCompatActivity {
     private Button ApplyTrip;
+    private Button DeleteTrip;
     private FloatingActionButton back2tripT;
     private EditText Editname;
+    private Trip selectedTrip;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_edit_trip);
+
+        DeleteTrip = findViewById(R.id.deleteTrip);
         Editname = findViewById(R.id.TripNameInput);
         back2tripT = findViewById(R.id.back2tripT);
+        ApplyTrip = findViewById(R.id.applyTrip);
+
+        setOnClickListeners();
+        CheckForEditTrip();
+    }
+
+    private void CheckForEditTrip()
+    {
+        Intent previousIntent = getIntent();
+
+        int passedID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
+        selectedTrip = Trip.getTripForID(passedID);
+
+        if (selectedTrip != null)
+        {
+            Editname.setText(selectedTrip.toString());
+        }
+        else
+        {
+            DeleteTrip.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void setOnClickListeners()
+    {
+        ApplyTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnApply(v);
+            }
+        });
         back2tripT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-        ApplyTrip = findViewById(R.id.applyTrip);
-        ApplyTrip.setOnClickListener(new View.OnClickListener() {
+        DeleteTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApplyNew(v);
+                OnDelete(v);
             }
         });
     }
-    public void ApplyNew(View v)
+
+    public void OnApply(View v)
     {
         DatabaseHelper dbhelper = DatabaseHelper.instanceOfDatabase(this);
         String name = String.valueOf(Editname.getText());
-        int id = Trip.tripsArrayList.size();
-        Trip newTrip = new Trip(id,name);
-        Trip.tripsArrayList.add(newTrip);
-        dbhelper.addtrip(newTrip);
+
+        if(selectedTrip == null)
+        {
+            //Are trips in a database sorted by IDs?
+            int id = Trip.tripsArrayList.get(Trip.tripsArrayList.size()-1).getID()+1;
+            Trip newTrip = new Trip(id,name);
+            Trip.tripsArrayList.add(newTrip);
+            dbhelper.addtrip(newTrip);
+        }
+        else
+        {
+            selectedTrip.setName(name);
+            dbhelper.updateTripInDB(selectedTrip);
+        }
+        finish();
+    }
+    public void OnDelete(View v)
+    {
+        DatabaseHelper dbhelper = DatabaseHelper.instanceOfDatabase(this);
+        dbhelper.deleteTrip(selectedTrip);
         finish();
     }
 }

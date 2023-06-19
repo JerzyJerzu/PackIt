@@ -13,12 +13,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "trips";
     private static final String TRIPS_ID = "_id";
     private static final String TRIPS_NAME = "name";
-
     public DatabaseHelper(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
     public static DatabaseHelper instanceOfDatabase(Context context)
     {
         if(dbHelper == null)
@@ -35,32 +33,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         + TRIPS_NAME + " TEXT" + ")";
         db.execSQL(createTableQuery);
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
-        String dropTableQuery = "DROP TABLE IF EXISTS " + TABLE_NAME;
-        db.execSQL(dropTableQuery);
-        onCreate(db);
-    }
 
+    }
     public void addtrip(Trip trip)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TRIPS_ID, trip.getID());
         values.put(TRIPS_NAME, trip.toString());
+
         db.insert(TABLE_NAME, null, values);
+    }
+    public void updateTripInDB(Trip selectedTrip)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TRIPS_ID, selectedTrip.getID()); //puts the same ID in the same place
+        values.put(TRIPS_NAME, selectedTrip.toString());
+
+        db.update(TABLE_NAME, values, TRIPS_ID + " =? ", new String[]{String.valueOf(selectedTrip.getID())});
+    }
+    public void deleteTrip(Trip selectedTrip)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, TRIPS_ID + "=?", new String[]{String.valueOf(selectedTrip.getID())});
         db.close();
     }
-
     public Cursor getTrips()
     {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
         return db.rawQuery(query, null);
     }
-
     public void populateTripsListArray()
     {
         SQLiteDatabase db = this.getReadableDatabase();

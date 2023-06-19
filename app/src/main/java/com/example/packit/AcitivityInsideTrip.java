@@ -14,46 +14,57 @@ public class AcitivityInsideTrip extends AppCompatActivity{
     private Button edit;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inside_trip);
 
         back = findViewById(R.id.back2main);
+        newItem = findViewById(R.id.NewItemButton);
+        newRelation = findViewById(R.id.NewRelationButton);
+        edit = findViewById(R.id.editTripButton);
+
+        setOnClickListeners();
+    }
+
+    private void setOnClickListeners()
+    {
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent previousIntent = getIntent();
+                int passedID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
+                Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityEditTrip.class);
+                intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedID);
+                startActivity(intent);
+            }
+        });
+        newRelation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent previousIntent = getIntent();
+                int passedID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
+                Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityEditRelation.class);
+                intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedID);
+                startActivity(intent);
+            }
+        });
+        newItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent previousIntent = getIntent();
+                int passedID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
+                Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityEditItem.class);
+                intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedID);
+                startActivity(intent);
+            }
+        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-        newItem = findViewById(R.id.NewItemButton);
-
-        newItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityEditItem.class);
-                startActivity(intent);
-            }
-        });
-
-        newRelation = findViewById(R.id.NewRelationButton);
-
-        newRelation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityEditRelation.class);
-                startActivity(intent);
-            }
-        });
-
-        edit = findViewById(R.id.editTripButton);
-
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityEditTrip.class);
-                startActivity(intent);
-            }
-        });
     }
+
 }
