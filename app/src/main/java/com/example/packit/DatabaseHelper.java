@@ -70,16 +70,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         {
             while(result.moveToNext())
             {
-                int id = result.getInt(1);
-                String name = result.getString(2);
+                int id = result.getInt(0);
+                String name = result.getString(1);
                 Trip trip = new Trip(id,name);
                 Trip.tripsArrayList.add(trip);
             }
         }
-    }
-    private void loadFromDBToMemory()
-    {
-        //DatabaseHelper databaseHelper = DatabaseHelper.instanceOfDatabase(this);
-        this.populateTripsListArray();
     }
 }
