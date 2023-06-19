@@ -10,8 +10,9 @@ public class AcitivityInsideTrip extends AppCompatActivity{
     private FloatingActionButton back;
     private Button newItem;
     private Button newRelation;
-
+    private Button DeleteTrip;
     private Button edit;
+    private Trip selectedTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -19,10 +20,13 @@ public class AcitivityInsideTrip extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inside_trip);
 
+        DeleteTrip = findViewById(R.id.deleteTrip);
         back = findViewById(R.id.back2main);
         newItem = findViewById(R.id.NewItemButton);
         newRelation = findViewById(R.id.NewRelationButton);
         edit = findViewById(R.id.editTripButton);
+
+        selectedTrip = Trip.getTripForID(getIntent().getIntExtra(Trip.TRIP_EDIT_EXTRA, -1));
 
         setOnClickListeners();
     }
@@ -65,6 +69,18 @@ public class AcitivityInsideTrip extends AppCompatActivity{
                 finish();
             }
         });
+        DeleteTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnDelete(v);
+            }
+        });
     }
-
+    public void OnDelete(View v)
+    {
+        DatabaseHelper dbhelper = DatabaseHelper.instanceOfDatabase(this);
+        dbhelper.deleteTrip(selectedTrip);
+        Trip.tripsArrayList.remove(selectedTrip);
+        finish();
+    }
 }

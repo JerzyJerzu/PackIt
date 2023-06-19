@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class AcitivityEditTrip extends AppCompatActivity {
     private Button ApplyTrip;
-    private Button DeleteTrip;
     private FloatingActionButton back2tripT;
     private EditText Editname;
     private Trip selectedTrip;
@@ -19,10 +18,8 @@ public class AcitivityEditTrip extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_edit_trip);
 
-        DeleteTrip = findViewById(R.id.deleteTrip);
         Editname = findViewById(R.id.TripNameInput);
         back2tripT = findViewById(R.id.back2tripT);
         ApplyTrip = findViewById(R.id.applyTrip);
@@ -42,10 +39,6 @@ public class AcitivityEditTrip extends AppCompatActivity {
         {
             Editname.setText(selectedTrip.toString());
         }
-        else
-        {
-            DeleteTrip.setVisibility(View.INVISIBLE);
-        }
     }
 
     private void setOnClickListeners()
@@ -62,12 +55,6 @@ public class AcitivityEditTrip extends AppCompatActivity {
                 finish();
             }
         });
-        DeleteTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OnDelete(v);
-            }
-        });
     }
 
     public void OnApply(View v)
@@ -78,7 +65,15 @@ public class AcitivityEditTrip extends AppCompatActivity {
         if(selectedTrip == null)
         {
             //Are trips in a database sorted by IDs?
-            int id = Trip.tripsArrayList.get(Trip.tripsArrayList.size()-1).getID()+1;
+            int id;
+            if (Trip.tripsArrayList.size() > 0)
+            {
+                id = Trip.tripsArrayList.get(Trip.tripsArrayList.size() - 1).getID() + 1;
+            }
+            else
+            {
+                id = 0;
+            }
             Trip newTrip = new Trip(id,name);
             Trip.tripsArrayList.add(newTrip);
             dbhelper.addtrip(newTrip);
@@ -88,12 +83,6 @@ public class AcitivityEditTrip extends AppCompatActivity {
             selectedTrip.setName(name);
             dbhelper.updateTripInDB(selectedTrip);
         }
-        finish();
-    }
-    public void OnDelete(View v)
-    {
-        DatabaseHelper dbhelper = DatabaseHelper.instanceOfDatabase(this);
-        dbhelper.deleteTrip(selectedTrip);
         finish();
     }
 }
