@@ -1,10 +1,12 @@
 package com.example.packit;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -16,11 +18,14 @@ public class AcitivityEditItem extends AppCompatActivity {
     private EditText EditDescription;
     private Item selectedItem;
     private Trip selectedTrip;
+    private ListView TagsListView;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
 
+        TagsListView = findViewById(R.id.ItemListOfTag);
         Editname = findViewById(R.id.ItemNameInput);
         EditDescription = findViewById(R.id.ItemDecription);
         back2tripI = findViewById(R.id.back2trip);
@@ -28,6 +33,7 @@ public class AcitivityEditItem extends AppCompatActivity {
 
         setOnClickListeners();
         CheckForEditItem();
+        SetItemChooseTagsAdapter();
     }
     private void CheckForEditItem()
     {
@@ -92,5 +98,15 @@ public class AcitivityEditItem extends AppCompatActivity {
             dbhelper.UpdateItemInDB(selectedItem);
         }
         finish();
+    }
+    private void SetItemChooseTagsAdapter()
+    {
+        ItemChooseTagsAdapter adapter = new ItemChooseTagsAdapter(getApplicationContext(), selectedTrip.TripTagsArrayList);
+        TagsListView.setAdapter(adapter);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SetItemChooseTagsAdapter();
     }
 }

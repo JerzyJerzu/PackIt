@@ -3,7 +3,10 @@ package com.example.packit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class AcitivityInsideTrip extends AppCompatActivity{
@@ -13,6 +16,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
     private Button DeleteTrip;
     private Button edit;
     private Trip selectedTrip;
+    private ListView TagsListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,6 +24,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inside_trip);
 
+        TagsListView = findViewById(R.id.TagsList);
         DeleteTrip = findViewById(R.id.deleteTrip);
         back = findViewById(R.id.back2main);
         newItem = findViewById(R.id.NewItemButton);
@@ -29,6 +34,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
         selectedTrip = Trip.getTripForID(getIntent().getIntExtra(Trip.TRIP_EDIT_EXTRA, -1));
 
         setOnClickListeners();
+        setTagAdapter();
     }
 
     private void setOnClickListeners()
@@ -75,6 +81,17 @@ public class AcitivityInsideTrip extends AppCompatActivity{
                 OnDelete(v);
             }
         });
+        TagsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+            {
+                Tag selected = (Tag) TagsListView.getItemAtPosition(position);
+                Intent intent = new Intent(getApplicationContext(), AcitivitySeeRelation.class);
+                intent.putExtra(Tag.TAG_EDIT_EXTRA, selected.getID());
+                startActivity(intent);
+            }
+        });
     }
     public void OnDelete(View v)
     {
@@ -82,5 +99,15 @@ public class AcitivityInsideTrip extends AppCompatActivity{
         dbhelper.deleteTrip(selectedTrip);
         Trip.tripsArrayList.remove(selectedTrip);
         finish();
+    }
+    private void setTagAdapter()
+    {
+        TagAdapter adapter = new TagAdapter(getApplicationContext(), selectedTrip.TripTagsArrayList);
+        TagsListView.setAdapter(adapter);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTagAdapter();
     }
 }

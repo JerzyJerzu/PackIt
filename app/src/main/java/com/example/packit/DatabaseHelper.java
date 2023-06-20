@@ -221,4 +221,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
     }
+    public void populateTripItemsListArray(Trip trip)
+    {
+
+    }
+    public void populateTripItemsArrayList(Trip trip)
+    {
+
+    }
+    public void populateTripTagsArrayList(Trip trip)
+    {
+
+    }
+    public void populateTagItemsArrayList(Trip trip)
+    {
+
+    }
 }
