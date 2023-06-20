@@ -15,8 +15,10 @@ public class AcitivitySeeRelation extends AppCompatActivity{
 
     private FloatingActionButton back;
     private Button edit;
+    private Button DeleteTag;
     private ListView ItemsListView;
     private Tag selectedTag;
+    private Trip selectedTrip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,7 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         ItemsListView = findViewById(R.id.ItemsWithTagList);
         back = findViewById(R.id.back2tripR);
         edit = findViewById(R.id.editRelationButton);
+        DeleteTag = findViewById(R.id.deleteTag);
 
         setOnClickListeners();
         SetSelectedtag();
@@ -38,7 +41,7 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         int passedTripID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
         int passedTagID = previousIntent.getIntExtra(Tag.TAG_EDIT_EXTRA, -1);
 
-        Trip selectedTrip = Trip.getTripForID(passedTripID);
+        selectedTrip = Trip.getTripForID(passedTripID);
 
         Log.d("TAG", "Trip ID value: " + passedTripID);
         Log.d("TAG", "Tag ID value: " + passedTagID);
@@ -48,6 +51,12 @@ public class AcitivitySeeRelation extends AppCompatActivity{
     }
     private void setOnClickListeners()
     {
+        DeleteTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnDelete(v);
+            }
+        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,5 +90,12 @@ public class AcitivitySeeRelation extends AppCompatActivity{
     {
         DatabaseHelper dbHelper = DatabaseHelper.instanceOfDatabase(this);
         dbHelper.populateTagItemsArrayList(selectedTag);
+    }
+    public void OnDelete(View v)
+    {
+        DatabaseHelper dbhelper = DatabaseHelper.instanceOfDatabase(this);
+        dbhelper.deleteTag(selectedTag);
+        selectedTrip.TripTagsArrayList.remove(selectedTag);
+        finish();
     }
 }

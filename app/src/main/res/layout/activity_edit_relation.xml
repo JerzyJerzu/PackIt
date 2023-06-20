@@ -75,23 +75,6 @@
         app:layout_constraintTop_toTopOf="@+id/EditRelationToolbar"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
-    <Button
-        android:id="@+id/deleteRelation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#E6B0B0"
-        android:text="Delete"
-        android:textColor="#E61B1B"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/EditRelationToolbar"
-        app:layout_constraintEnd_toEndOf="@+id/EditRelationToolbar"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/EditRelationToolbar"
-        app:layout_constraintTop_toTopOf="@+id/EditRelationToolbar" />
-
     <TextView
         android:id="@+id/editRelation"
         android:layout_width="0dp"
