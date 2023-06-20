@@ -1,5 +1,8 @@
 package com.example.packit;
 
+import android.util.Log;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +22,7 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_relation);
 
-        ItemsListView.findViewById(R.id.ItemListOfTag);
+        ItemsListView = findViewById(R.id.ItemsWithTagList);
         back = findViewById(R.id.back2tripR);
         edit = findViewById(R.id.editRelationButton);
 
@@ -32,11 +35,15 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         Intent previousIntent = getIntent();
 
         int passedTripID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
-        int passedItemID = previousIntent.getIntExtra(Tag.TAG_EDIT_EXTRA, -1);
+        int passedTagID = previousIntent.getIntExtra(Tag.TAG_EDIT_EXTRA, -1);
 
         Trip selectedTrip = Trip.getTripForID(passedTripID);
+
+        Log.d("TAG", "Trip ID value: " + passedTripID);
+        Log.d("TAG", "Tag ID value: " + passedTagID);
+
         //will crash problems when selectedTrip = null
-        selectedTag = selectedTrip.getTagForID(passedItemID);
+        selectedTag = selectedTrip.getTagForID(passedTagID);
     }
     private void setOnClickListeners()
     {

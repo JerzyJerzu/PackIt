@@ -15,6 +15,7 @@ public class Tag {
         this.name = name;
         this.TripID = TripID;
         this.description = description;
+        TagItemsArrayList = new ArrayList<>();
     }
     public int getID() {
         return ID;

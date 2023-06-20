@@ -2,6 +2,7 @@ package com.example.packit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -86,9 +87,15 @@ public class AcitivityInsideTrip extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
             {
+                Intent previousIntent = getIntent();
                 Tag selected = (Tag) TagsListView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), AcitivitySeeRelation.class);
                 intent.putExtra(Tag.TAG_EDIT_EXTRA, selected.getID());
+                int passedTripID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
+                intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedTripID);
+
+                Log.d("TAG", "Trip ID passed to relation intent: " + passedTripID);
+
                 startActivity(intent);
             }
         });
