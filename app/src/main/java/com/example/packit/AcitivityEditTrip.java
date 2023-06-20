@@ -32,6 +32,7 @@ public class AcitivityEditTrip extends AppCompatActivity {
     {
         Intent previousIntent = getIntent();
 
+        //when not given TRIP_EDIT_EXTRA, will return -1 and getTripForID(passedID) will return null
         int passedID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
         selectedTrip = Trip.getTripForID(passedID);
 
@@ -57,7 +58,7 @@ public class AcitivityEditTrip extends AppCompatActivity {
         });
     }
 
-    public void OnApply(View v)
+    private void OnApply(View v)
     {
         DatabaseHelper dbhelper = DatabaseHelper.instanceOfDatabase(this);
         String name = String.valueOf(Editname.getText());

@@ -31,7 +31,7 @@ public class Tag {
     public String getDescription() {
         return description;
     }
-    public void setDecsription(String decsription) {
+    public void setDescription(String decsription) {
         this.description = decsription;
     }
 }

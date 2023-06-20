@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String JUNCTION_TAG_ID = "tag_id";
     private static final String JUNCTION_ITEM_ID = "item_id";
 
-    private static final String TABLE_ITEMS = "tags";
+    private static final String TABLE_ITEMS = "items";
     private static final String ITEM_ID = "_id";
     private static final String ITEM_NAME = "name";
     private static final String ITEM_DESCRIPTION = "description";
