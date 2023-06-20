@@ -31,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_ITEMS = "items";
     private static final String ITEM_ID = "_id";
+    private static final String ITEM_TRIP_ID = "Trip_id";
     private static final String ITEM_NAME = "name";
     private static final String ITEM_DESCRIPTION = "description";
     private static final String ITEM_CHECKED = "checked";
@@ -70,9 +71,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         createTableQuery = "CREATE TABLE " + TABLE_ITEMS + "("
                 + ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + ITEM_TRIP_ID + " INTEGER,"
                 + ITEM_NAME + " TEXT,"
                 + ITEM_DESCRIPTION + " TEXT,"
-                + ITEM_CHECKED + " BOOLEAN"
+                + ITEM_CHECKED + " BOOLEAN,"
+                + "FOREIGN KEY (" + ITEM_TRIP_ID + ") REFERENCES "
+                + TABLE_TRIPS + "(" + TRIPS_ID + ") ON DELETE CASCADE"
                 + ")";
         db.execSQL(createTableQuery);
 
@@ -131,6 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ITEM_ID, item.getID());
+        values.put(ITEM_TRIP_ID, item.getTripID());
         values.put(ITEM_NAME, item.getName());
         values.put(ITEM_DESCRIPTION, item.getDescription());
         values.put(ITEM_CHECKED, item.getChecked());
@@ -227,19 +232,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         trip.TripItemsArrayList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_ITEMS, null);;
-
+        Cursor result = db.rawQuery("SELECT * FROM "
+                        + TABLE_ITEMS
+                        + " WHERE " + ITEM_TRIP_ID + " = "+trip.getID(),
+                null);
         if(result.getCount() != 0)
         {
             while(result.moveToNext())
             {
                 int id = result.getInt(0);
-                String name = result.getString(1);
-                String description = result.getString(2);
-                int intValue = result.getInt(3);
+                int tripId = result.getInt(1);
+                String name = result.getString(2);
+                String description = result.getString(3);
+                int intValue = result.getInt(4);
                 boolean check = intValue==1;
 
-                Item n = new Item(id,name,description,check);
+                Item n = new Item(id,tripId,name,description,check);
                 trip.TripItemsArrayList.add(n);
             }
         }
@@ -248,7 +256,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         trip.TripTagsArrayList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_TAGS, null);;
+        Cursor result = db.rawQuery("SELECT *"
+                + " FROM " + TABLE_TAGS
+                + " WHERE " + TAG_TRIP_ID + " = "+trip.getID(),
+                null);
 
         if(result.getCount() != 0)
         {
@@ -275,12 +286,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             while(result.moveToNext())
             {
                 int id = result.getInt(0);
-                String name = result.getString(1);
-                String description = result.getString(2);
-                int intValue = result.getInt(3);
+                int idtrip = result.getInt(1);
+                String name = result.getString(2);
+                String description = result.getString(3);
+                int intValue = result.getInt(4);
                 boolean check = intValue==1;
 
-                Item n = new Item(id,name,description,check);
+                Item n = new Item(id,idtrip,name,description,check);
                 tag.TagItemsArrayList.add(n);
             }
         }

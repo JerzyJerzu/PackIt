@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -75,6 +76,23 @@ public class AcitivitySeeRelation extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+        ItemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+            {
+                Intent previousIntent = getIntent();
+                Item selected = (Item) ItemsListView.getItemAtPosition(position);
+                Intent intent = new Intent(getApplicationContext(), AcitivityEditItem.class);
+                intent.putExtra(Item.ITEM_EDIT_EXTRA, selected.getID());
+                int passedTripID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
+                intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedTripID);
+
+                Log.d("TAG", "Trip ID passed to relation intent: " + passedTripID);
+
+                startActivity(intent);
+            }
+        });
     }
     private void setItemsAdapter()
     {
@@ -82,7 +100,8 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         ItemsListView.setAdapter(itemsAdapter);
     }
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
         setItemsAdapter();
     }

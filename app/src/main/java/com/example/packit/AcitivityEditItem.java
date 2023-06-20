@@ -13,6 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AcitivityEditItem extends AppCompatActivity {
     private Button ApplyItem;
+    private Button DeleteItem;
     private FloatingActionButton back2tripI;
     private EditText Editname;
     private EditText EditDescription;
@@ -30,6 +31,7 @@ public class AcitivityEditItem extends AppCompatActivity {
         EditDescription = findViewById(R.id.ItemDecription);
         back2tripI = findViewById(R.id.back2trip);
         ApplyItem = findViewById(R.id.applyItem);
+        DeleteItem = findViewById(R.id.deleteItem);
 
         setOnClickListeners();
         CheckForEditItem();
@@ -51,9 +53,19 @@ public class AcitivityEditItem extends AppCompatActivity {
             Editname.setText(selectedItem.getName());
             EditDescription.setText(selectedItem.getDescription());
         }
+        else
+        {
+            DeleteItem.setVisibility(View.INVISIBLE);
+        }
     }
     private void setOnClickListeners()
     {
+        DeleteItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnDelete(v);
+            }
+        });
         ApplyItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {OnApply(v);}
@@ -87,7 +99,7 @@ public class AcitivityEditItem extends AppCompatActivity {
             // may be really dangerous if violates primary key!!!
             id = id + 10000*TripId;
 
-            Item newItem = new Item(id,name,description,false);
+            Item newItem = new Item(id,TripId,name,description,false);
             selectedTrip.TripItemsArrayList.add(newItem);
             dbhelper.addNewItem(newItem);
         }
@@ -108,5 +120,12 @@ public class AcitivityEditItem extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         SetItemChooseTagsAdapter();
+    }
+    public void OnDelete(View v)
+    {
+        DatabaseHelper dbhelper = DatabaseHelper.instanceOfDatabase(this);
+        dbhelper.deleteItem(selectedItem);
+        selectedTrip.TripItemsArrayList.remove(selectedItem);
+        finish();
     }
 }
