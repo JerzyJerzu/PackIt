@@ -29,6 +29,7 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         setOnClickListeners();
         SetSelectedtag();
         setItemsAdapter();
+        loadFromDBToMemory();
     }
     private void SetSelectedtag()
     {
@@ -56,7 +57,12 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent previousIntent = getIntent();
+                int passedTripID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
+                int passedTagID = previousIntent.getIntExtra(Tag.TAG_EDIT_EXTRA, -1);
                 Intent intent = new Intent(AcitivitySeeRelation.this, AcitivityEditRelation.class);
+                intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedTripID);
+                intent.putExtra(Tag.TAG_EDIT_EXTRA, passedTagID);
                 startActivity(intent);
             }
         });
@@ -70,5 +76,10 @@ public class AcitivitySeeRelation extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         setItemsAdapter();
+    }
+    private void loadFromDBToMemory()
+    {
+        DatabaseHelper dbHelper = DatabaseHelper.instanceOfDatabase(this);
+        dbHelper.populateTagItemsArrayList(selectedTag);
     }
 }

@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper dbHelper;
     private static final String DATABASE_NAME = "ToPackDB";
@@ -223,18 +225,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void populateTripItemsListArray(Trip trip)
     {
+        trip.TripItemsArrayList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_ITEMS, null);;
 
-    }
-    public void populateTripItemsArrayList(Trip trip)
-    {
+        if(result.getCount() != 0)
+        {
+            while(result.moveToNext())
+            {
+                int id = result.getInt(0);
+                String name = result.getString(1);
+                String description = result.getString(2);
+                int intValue = result.getInt(3);
+                boolean check = intValue==1;
 
+                Item n = new Item(id,name,description,check);
+                trip.TripItemsArrayList.add(n);
+            }
+        }
     }
     public void populateTripTagsArrayList(Trip trip)
     {
+        trip.TripTagsArrayList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_TAGS, null);;
 
+        if(result.getCount() != 0)
+        {
+            while(result.moveToNext())
+            {
+                int id = result.getInt(0);
+                int tripID = result.getInt(1);
+                String name = result.getString(2);
+                String description = result.getString(3);
+
+                Tag n = new Tag(id,tripID,name,description);
+                trip.TripTagsArrayList.add(n);
+            }
+        }
     }
-    public void populateTagItemsArrayList(Trip trip)
+    public void populateTagItemsArrayList(Tag tag)
     {
+        tag.TagItemsArrayList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_ITEMS, null);;
 
+        if(result.getCount() != 0)
+        {
+            while(result.moveToNext())
+            {
+                int id = result.getInt(0);
+                String name = result.getString(1);
+                String description = result.getString(2);
+                int intValue = result.getInt(3);
+                boolean check = intValue==1;
+
+                Item n = new Item(id,name,description,check);
+                tag.TagItemsArrayList.add(n);
+            }
+        }
     }
 }

@@ -9,13 +9,13 @@ public class Item {
     private String name;
     private String description;
     private Boolean checked;
-    public Item(int ID, String name, String description)
+    public Item(int ID, String name, String description,boolean checked)
     {
         this.ID = ID;
         this.name = name;
         this.description = description;
         this.ItemTagsArrayList = new ArrayList<>();
-        this.checked = false;
+        this.checked = checked;
     }
 
     public int getID() {

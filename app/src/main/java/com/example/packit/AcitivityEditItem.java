@@ -87,7 +87,7 @@ public class AcitivityEditItem extends AppCompatActivity {
             // may be really dangerous if violates primary key!!!
             id = id + 10000*TripId;
 
-            Item newItem = new Item(id,name,description);
+            Item newItem = new Item(id,name,description,false);
             selectedTrip.TripItemsArrayList.add(newItem);
             dbhelper.addNewItem(newItem);
         }

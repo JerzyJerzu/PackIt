@@ -36,6 +36,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
 
         setOnClickListeners();
         setTagAdapter();
+        loadFromDBToMemory();
     }
 
     private void setOnClickListeners()
@@ -116,5 +117,11 @@ public class AcitivityInsideTrip extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         setTagAdapter();
+    }
+    private void loadFromDBToMemory()
+    {
+        DatabaseHelper dbHelper = DatabaseHelper.instanceOfDatabase(this);
+        dbHelper.populateTripItemsListArray(selectedTrip);
+        dbHelper.populateTripTagsArrayList(selectedTrip);
     }
 }
