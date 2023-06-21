@@ -20,7 +20,6 @@ public class AcitivityEditItem extends AppCompatActivity {
     private Item selectedItem;
     private Trip selectedTrip;
     private ListView TagsListView;
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -15,6 +15,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
     private Button newItem;
     private Button newRelation;
     private Button DeleteTrip;
+    private Button seeAllItemsButton;
     private Button edit;
     private Trip selectedTrip;
     private ListView TagsListView;
@@ -25,20 +26,23 @@ public class AcitivityInsideTrip extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inside_trip);
 
+        selectedTrip = Trip.getTripForID(getIntent().getIntExtra(Trip.TRIP_EDIT_EXTRA, -1));
+
+        initWidgets();
+        setOnClickListeners();
+        setTagAdapter();
+        loadFromDBToMemory();
+    }
+    private void initWidgets()
+    {
+        seeAllItemsButton = findViewById(R.id.SeeAllItems);
         TagsListView = findViewById(R.id.TagsList);
         DeleteTrip = findViewById(R.id.deleteTrip);
         back = findViewById(R.id.back2main);
         newItem = findViewById(R.id.NewItemButton);
         newRelation = findViewById(R.id.NewRelationButton);
         edit = findViewById(R.id.editTripButton);
-
-        selectedTrip = Trip.getTripForID(getIntent().getIntExtra(Trip.TRIP_EDIT_EXTRA, -1));
-
-        setOnClickListeners();
-        setTagAdapter();
-        loadFromDBToMemory();
     }
-
     private void setOnClickListeners()
     {
         edit.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +61,16 @@ public class AcitivityInsideTrip extends AppCompatActivity{
                 Intent previousIntent = getIntent();
                 int passedID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
                 Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityEditRelation.class);
+                intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedID);
+                startActivity(intent);
+            }
+        });
+        seeAllItemsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent previousIntent = getIntent();
+                int passedID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
+                Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityMainItemsList.class);
                 intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedID);
                 startActivity(intent);
             }
