@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +18,8 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.View
     private Context appContext;
     //private MainActivity activity;
 
-    public ItemCheckAdapter(Context context) {
+    public ItemCheckAdapter(Context context, List<Item> Items) {
+        this.items = Items;
         this.appContext = context;
         this.db = DatabaseHelper.instanceOfDatabase(appContext);
         //this.activity = activity;
@@ -37,7 +39,7 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.View
         //db.openDatabase();
 
         final Item item = items.get(position);
-        holder.task.setText(item.getName());
+        holder.itemName.setText(item.getName());
         /*holder.task.setChecked(toBoolean(item.getChecked()));
         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -86,10 +88,11 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.View
     }
     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        CheckBox task;
-
+        //CheckBox task;
+        TextView itemName;
         ViewHolder(View view) {
             super(view);
+            itemName = view.findViewById(R.id.TripName);
             //task = view.findViewById(R.id.todoCheckBox);
         }
     }

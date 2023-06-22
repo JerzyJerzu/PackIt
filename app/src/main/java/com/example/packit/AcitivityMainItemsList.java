@@ -9,11 +9,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class AcitivityMainItemsList extends AppCompatActivity{
 
     private FloatingActionButton back;
-    private ListView ItemsListView;
+    private RecyclerView ItemsListView;
     private Trip selectedTrip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,7 @@ public class AcitivityMainItemsList extends AppCompatActivity{
         setContentView(R.layout.activity_see_items);
 
         ItemsListView = findViewById(R.id.MainItemsList);
+        ItemsListView.setLayoutManager(new LinearLayoutManager(this));
         back = findViewById(R.id.back2tripItemsList);
 
         setOnClickListeners();
@@ -42,6 +46,7 @@ public class AcitivityMainItemsList extends AppCompatActivity{
                 finish();
             }
         });
+        /*
         ItemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -58,11 +63,11 @@ public class AcitivityMainItemsList extends AppCompatActivity{
 
                 startActivity(intent);
             }
-        });
+        });*/
     }
     private void setItemsAdapter()
     {
-        ItemChecklistAdapter itemsAdapter = new ItemChecklistAdapter(getApplicationContext(), selectedTrip.TripItemsArrayList);
+        ItemCheckAdapter itemsAdapter = new ItemCheckAdapter(getApplicationContext(), selectedTrip.TripItemsArrayList);
         ItemsListView.setAdapter(itemsAdapter);
     }
     @Override

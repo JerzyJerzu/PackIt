@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="@+id/ItemsListToolbar"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MainItemsList"
         android:layout_width="match_parent"
         android:layout_height="555dp"
