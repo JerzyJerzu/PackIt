@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,7 +30,7 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.trip_cell, parent, false);
+                .inflate(R.layout.checkbox_card, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -39,31 +40,31 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.View
         //db.openDatabase();
 
         final Item item = items.get(position);
-        holder.itemName.setText(item.getName());
-        /*holder.task.setChecked(toBoolean(item.getChecked()));
-        holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.checkBox.setText(item.getName());
+
+        holder.checkBox.setChecked(item.getChecked());
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    db.updateStatus(item.getId(), 1);
+                    item.setChecked(true);
+                    db.UpdateItemInDB(item);
                 } else {
-                    db.updateStatus(item.getId(), 0);
+                    item.setChecked(false);
+                    db.UpdateItemInDB(item);
                 }
             }
-        });*/
-    }
-
-    private boolean toBoolean(int n) {
-        return n != 0;
+        });
     }
     @Override
     public int getItemCount() {
         return items.size();
     }
-    /*
-    public Context getContext() {
-        return activity;
-    }
+
+    public Object getItem(int position)
+    {
+        return items.get(position);
+    }/*
 
     public void setTasks(List<ToDoModel> todoList) {
         this.todoList = todoList;
@@ -88,12 +89,10 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.View
     }
     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        //CheckBox task;
-        TextView itemName;
+        CheckBox checkBox;
         ViewHolder(View view) {
             super(view);
-            itemName = view.findViewById(R.id.TripName);
-            //task = view.findViewById(R.id.todoCheckBox);
+            checkBox = view.findViewById(R.id.CheckBox);
         }
     }
 }

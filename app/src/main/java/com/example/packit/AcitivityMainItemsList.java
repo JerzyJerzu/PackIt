@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,15 +17,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class AcitivityMainItemsList extends AppCompatActivity{
 
     private FloatingActionButton back;
-    private RecyclerView ItemsListView;
+    private RecyclerView itemsRecyclerView;
     private Trip selectedTrip;
+    private ItemCheckAdapter itemsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_items);
 
-        ItemsListView = findViewById(R.id.MainItemsList);
-        ItemsListView.setLayoutManager(new LinearLayoutManager(this));
+        itemsRecyclerView = findViewById(R.id.MainItemsList);
+        itemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         back = findViewById(R.id.back2tripItemsList);
 
         setOnClickListeners();
@@ -67,8 +69,13 @@ public class AcitivityMainItemsList extends AppCompatActivity{
     }
     private void setItemsAdapter()
     {
-        ItemCheckAdapter itemsAdapter = new ItemCheckAdapter(getApplicationContext(), selectedTrip.TripItemsArrayList);
-        ItemsListView.setAdapter(itemsAdapter);
+        itemsAdapter = new ItemCheckAdapter(getApplicationContext(), selectedTrip.TripItemsArrayList);
+        itemsRecyclerView.setAdapter(itemsAdapter);
+
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new RecyclerItemTouchHelper(itemsAdapter,this));
+        itemTouchHelper.attachToRecyclerView(itemsRecyclerView);
+
     }
     @Override
     protected void onResume()
@@ -80,5 +87,18 @@ public class AcitivityMainItemsList extends AppCompatActivity{
     {
         DatabaseHelper dbHelper = DatabaseHelper.instanceOfDatabase(this);
         dbHelper.populateTripItemsListArray(selectedTrip);
+    }
+    public void moveToEditItem(int position)
+    {
+        Intent previousIntent = getIntent();
+        Item selected = (Item) itemsAdapter.getItem(position);
+        Intent intent = new Intent(getApplicationContext(), AcitivityEditItem.class);
+        intent.putExtra(Item.ITEM_EDIT_EXTRA, selected.getID());
+        int passedTripID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
+        intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedTripID);
+
+        Log.d("TAG", "Trip ID passed to relation intent: " + passedTripID);
+
+        startActivity(intent);
     }
 }
