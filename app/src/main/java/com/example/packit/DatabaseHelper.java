@@ -297,4 +297,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
     }
+
+    public boolean isItemInTag(Item item, Tag tag) {
+        return false;
+    }
 }

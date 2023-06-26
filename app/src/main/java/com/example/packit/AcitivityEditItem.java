@@ -9,6 +9,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AcitivityEditItem extends AppCompatActivity {
@@ -19,18 +23,19 @@ public class AcitivityEditItem extends AppCompatActivity {
     private EditText EditDescription;
     private Item selectedItem;
     private Trip selectedTrip;
-    private ListView TagsListView;
+    private RecyclerView TagsRecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
 
-        TagsListView = findViewById(R.id.ItemListOfTag);
         Editname = findViewById(R.id.ItemNameInput);
         EditDescription = findViewById(R.id.ItemDecription);
         back2tripI = findViewById(R.id.back2trip);
         ApplyItem = findViewById(R.id.applyItem);
         DeleteItem = findViewById(R.id.deleteItem);
+        TagsRecyclerView = findViewById(R.id.ItemListOfTag);
+        TagsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         setOnClickListeners();
         CheckForEditItem();
@@ -112,8 +117,8 @@ public class AcitivityEditItem extends AppCompatActivity {
     }
     private void SetItemChooseTagsAdapter()
     {
-        ItemChooseTagsAdapter adapter = new ItemChooseTagsAdapter(getApplicationContext(), selectedTrip.TripTagsArrayList);
-        TagsListView.setAdapter(adapter);
+        TagChooseAdapter tagsAdapter = new TagChooseAdapter(getApplicationContext(), selectedTrip.TripTagsArrayList, selectedItem);
+        TagsRecyclerView.setAdapter(tagsAdapter);
     }
     @Override
     protected void onResume() {
