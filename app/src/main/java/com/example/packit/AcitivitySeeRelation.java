@@ -11,13 +11,17 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class AcitivitySeeRelation extends AppCompatActivity{
 
     private FloatingActionButton back;
     private Button edit;
     private Button DeleteTag;
-    private ListView ItemsListView;
+    //private ListView ItemsListView;
+    private RecyclerView ItemsRecyclerView;
     private Tag selectedTag;
     private Trip selectedTrip;
     @Override
@@ -25,7 +29,9 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_relation);
 
-        ItemsListView = findViewById(R.id.ItemsWithTagList);
+        ItemsRecyclerView = findViewById(R.id.ItemsWithTagList);
+        ItemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //ItemsListView = findViewById(R.id.ItemsWithTagList);
         back = findViewById(R.id.back2tripR);
         edit = findViewById(R.id.editRelationButton);
         DeleteTag = findViewById(R.id.deleteTag);
@@ -76,28 +82,14 @@ public class AcitivitySeeRelation extends AppCompatActivity{
                 startActivity(intent);
             }
         });
-        ItemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
-            {
-                Intent previousIntent = getIntent();
-                Item selected = (Item) ItemsListView.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), AcitivityEditItem.class);
-                intent.putExtra(Item.ITEM_EDIT_EXTRA, selected.getID());
-                int passedTripID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
-                intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedTripID);
-
-                Log.d("TAG", "Trip ID passed to relation intent: " + passedTripID);
-
-                startActivity(intent);
-            }
-        });
     }
-    private void setItemsAdapter()
-    {
+    public void setItemsAdapter()
+    {/*
         ItemWithTagAdapter itemsAdapter = new ItemWithTagAdapter(getApplicationContext(), selectedTag.TagItemsArrayList);
         ItemsListView.setAdapter(itemsAdapter);
+*/
+        ItemWithTagAdapter itemsAdapter = new ItemWithTagAdapter(getApplicationContext(), selectedTrip.TripItemsArrayList, selectedTag);
+        ItemsRecyclerView.setAdapter(itemsAdapter);
     }
     @Override
     protected void onResume()

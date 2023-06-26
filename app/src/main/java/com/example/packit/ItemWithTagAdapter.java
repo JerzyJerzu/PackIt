@@ -1,36 +1,69 @@
 package com.example.packit;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+        import android.annotation.SuppressLint;
+        import android.content.Context;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.CheckBox;
+        import android.widget.CompoundButton;
+        import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+        import androidx.annotation.NonNull;
+        import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+        import java.util.List;
 
-public class ItemWithTagAdapter extends ArrayAdapter<Item>
-{
-    public ItemWithTagAdapter(Context context, List<Item> Items)
-    {
-        super(context, 0, Items);
+public class ItemWithTagAdapter extends RecyclerView.Adapter<ItemWithTagAdapter.ViewHolder> {
+    private List<Item> items;
+    private DatabaseHelper db;
+    private Context appContext;
+    private Tag selectedTag;
+
+    public ItemWithTagAdapter(Context context, List<Item> Items, Tag tag) {
+        this.items = Items;
+        this.appContext = context;
+        this.db = DatabaseHelper.instanceOfDatabase(appContext);
+        this.selectedTag = tag;
+        //this.activity = activity;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
-    {
-        Item item = getItem(position);
-        if(convertView == null)
-        {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.trip_cell, parent, false);
-        }
-        TextView name = convertView.findViewById(R.id.TripName);
-        name.setText(item.getName());
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.checkbox_card, parent, false);
+        return new ViewHolder(view);
+    }
+    @Override
+    public void onBindViewHolder(@NonNull final ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        //db.openDatabase();
 
-        return convertView;
+        final Item item = items.get(position);
+        holder.checkBox.setText(item.getName());
+
+        holder.checkBox.setChecked(false);
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    selectedTag.TagItemsArrayList.remove(item);
+                    items.remove(item);
+                    notifyItemRemoved(position);
+                    db.deleteJunction(item, selectedTag);
+                }
+            }
+        });
+    }
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        CheckBox checkBox;
+        ViewHolder(View view) {
+            super(view);
+            checkBox = view.findViewById(R.id.CheckBox);
+        }
     }
 }
