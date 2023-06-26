@@ -11,10 +11,12 @@ package com.example.packit;
         import androidx.annotation.NonNull;
         import androidx.recyclerview.widget.RecyclerView;
 
+        import java.util.ArrayList;
         import java.util.List;
 
 public class TagChooseAdapter extends RecyclerView.Adapter<TagChooseAdapter.ViewHolder> {
     private List<Tag> tags;
+    public List<Tag> TempSelectedTags;
     private DatabaseHelper db;
     private Context appContext;
     private Item item;
@@ -24,7 +26,7 @@ public class TagChooseAdapter extends RecyclerView.Adapter<TagChooseAdapter.View
         this.appContext = context;
         this.db = DatabaseHelper.instanceOfDatabase(appContext);
         this.item = selectedItem;
-        //this.activity = activity;
+        this.TempSelectedTags = new ArrayList<Tag>();
     }
 
     @NonNull
@@ -36,19 +38,22 @@ public class TagChooseAdapter extends RecyclerView.Adapter<TagChooseAdapter.View
     }
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        //db.openDatabase();
 
         final Tag tag = tags.get(position);
         holder.checkBox.setText(tag.getName());
 
         holder.checkBox.setChecked(db.isItemInTag(item,tag));
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    db.addJunction(tag, item);
+                    if(item != null) {db.addJunction(tag, item);}
+                    else {TempSelectedTags.add(tag);}
                 } else {
                     db.deleteJunction(item, tag);
+                    if(item != null) {db.deleteJunction(item, tag);}
+                    else {TempSelectedTags.remove(tag);}
                 }
             }
         });

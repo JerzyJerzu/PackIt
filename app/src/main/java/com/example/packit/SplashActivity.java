@@ -23,12 +23,11 @@ public class SplashActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 // Once the background work is complete, start the main activity
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
 
-                // Close the splash activity to prevent going back to it
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+
+                startActivity(intent);
                 finish();
             }
         });

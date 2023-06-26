@@ -1,5 +1,6 @@
 package com.example.packit;
 
+import android.content.DialogInterface;
 import android.util.Log;
 
 import android.annotation.SuppressLint;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +22,6 @@ public class AcitivitySeeRelation extends AppCompatActivity{
     private FloatingActionButton back;
     private Button edit;
     private Button DeleteTag;
-    //private ListView ItemsListView;
     private RecyclerView ItemsRecyclerView;
     private Tag selectedTag;
     private Trip selectedTrip;
@@ -31,7 +32,6 @@ public class AcitivitySeeRelation extends AppCompatActivity{
 
         ItemsRecyclerView = findViewById(R.id.ItemsWithTagList);
         ItemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //ItemsListView = findViewById(R.id.ItemsWithTagList);
         back = findViewById(R.id.back2tripR);
         edit = findViewById(R.id.editRelationButton);
         DeleteTag = findViewById(R.id.deleteTag);
@@ -61,7 +61,7 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         DeleteTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnDelete(v);
+                deleteConfirmaitonDialog();
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -84,10 +84,7 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         });
     }
     public void setItemsAdapter()
-    {/*
-        ItemWithTagAdapter itemsAdapter = new ItemWithTagAdapter(getApplicationContext(), selectedTag.TagItemsArrayList);
-        ItemsListView.setAdapter(itemsAdapter);
-*/
+    {
         ItemWithTagAdapter itemsAdapter = new ItemWithTagAdapter(getApplicationContext(), selectedTag.TagItemsArrayList, selectedTag);
         ItemsRecyclerView.setAdapter(itemsAdapter);
     }
@@ -102,11 +99,24 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         DatabaseHelper dbHelper = DatabaseHelper.instanceOfDatabase(this);
         dbHelper.populateTagItemsArrayList(selectedTag);
     }
-    public void OnDelete(View v)
+    public void OnDelete()
     {
         DatabaseHelper dbhelper = DatabaseHelper.instanceOfDatabase(this);
         dbhelper.deleteTag(selectedTag);
         selectedTrip.TripTagsArrayList.remove(selectedTag);
         finish();
+    }
+    private void deleteConfirmaitonDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation")
+                .setMessage("Are you sure?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        OnDelete();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }

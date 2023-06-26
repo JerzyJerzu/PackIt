@@ -24,6 +24,7 @@ public class AcitivityEditItem extends AppCompatActivity {
     private Item selectedItem;
     private Trip selectedTrip;
     private RecyclerView TagsRecyclerView;
+    private TagChooseAdapter tagsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +107,7 @@ public class AcitivityEditItem extends AppCompatActivity {
             Item newItem = new Item(id,TripId,name,description,false);
             selectedTrip.TripItemsArrayList.add(newItem);
             dbhelper.addNewItem(newItem);
+            TranscriptFromTagsArrayList2DB(newItem);
         }
         else
         {
@@ -117,7 +119,7 @@ public class AcitivityEditItem extends AppCompatActivity {
     }
     private void SetItemChooseTagsAdapter()
     {
-        TagChooseAdapter tagsAdapter = new TagChooseAdapter(getApplicationContext(), selectedTrip.TripTagsArrayList, selectedItem);
+        tagsAdapter = new TagChooseAdapter(getApplicationContext(), selectedTrip.TripTagsArrayList, selectedItem);
         TagsRecyclerView.setAdapter(tagsAdapter);
     }
     @Override
@@ -131,5 +133,12 @@ public class AcitivityEditItem extends AppCompatActivity {
         dbhelper.deleteItem(selectedItem);
         selectedTrip.TripItemsArrayList.remove(selectedItem);
         finish();
+    }
+    private void TranscriptFromTagsArrayList2DB(Item newItem)
+    {
+        DatabaseHelper db = DatabaseHelper.instanceOfDatabase(getApplicationContext());
+        for (Tag tag : tagsAdapter.TempSelectedTags) {
+            db.addJunction(tag,newItem);
+        }
     }
 }

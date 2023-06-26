@@ -1,5 +1,6 @@
 package com.example.packit;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class AcitivityInsideTrip extends AppCompatActivity{
@@ -94,7 +96,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
         DeleteTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnDelete(v);
+                deleteConfirmaitonDialog();
             }
         });
         TagsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -115,7 +117,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
             }
         });
     }
-    public void OnDelete(View v)
+    public void OnDelete()
     {
         DatabaseHelper dbhelper = DatabaseHelper.instanceOfDatabase(this);
         dbhelper.deleteTrip(selectedTrip);
@@ -137,5 +139,18 @@ public class AcitivityInsideTrip extends AppCompatActivity{
         DatabaseHelper dbHelper = DatabaseHelper.instanceOfDatabase(this);
         dbHelper.populateTripItemsListArray(selectedTrip);
         dbHelper.populateTripTagsArrayList(selectedTrip);
+    }
+    private void deleteConfirmaitonDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation")
+                .setMessage("Are you sure?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        OnDelete();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }

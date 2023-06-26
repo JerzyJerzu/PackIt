@@ -17,7 +17,6 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.View
     private List<Item> items;
     private DatabaseHelper db;
     private Context appContext;
-    //private MainActivity activity;
 
     public ItemCheckAdapter(Context context, List<Item> Items) {
         this.items = Items;
@@ -25,7 +24,6 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.View
         this.db = DatabaseHelper.instanceOfDatabase(appContext);
         //this.activity = activity;
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,11 +31,8 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.View
                 .inflate(R.layout.checkbox_card, parent, false);
         return new ViewHolder(itemView);
     }
-
-
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        //db.openDatabase();
 
         final Item item = items.get(position);
         holder.checkBox.setText(item.getName());
@@ -66,30 +61,7 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.View
     public Object getItem(int position)
     {
         return items.get(position);
-    }/*
-
-    public void setTasks(List<ToDoModel> todoList) {
-        this.todoList = todoList;
-        notifyDataSetChanged();
     }
-
-    public void deleteItem(int position) {
-        ToDoModel item = todoList.get(position);
-        db.deleteTask(item.getId());
-        todoList.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    public void editItem(int position) {
-        ToDoModel item = todoList.get(position);
-        Bundle bundle = new Bundle();
-        bundle.putInt("id", item.getId());
-        bundle.putString("task", item.getTask());
-        AddNewTask fragment = new AddNewTask();
-        fragment.setArguments(bundle);
-        fragment.show(activity.getSupportFragmentManager(), AddNewTask.TAG);
-    }
-    */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         CheckBox checkBox;
         ViewHolder(View view) {

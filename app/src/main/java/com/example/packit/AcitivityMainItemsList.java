@@ -48,14 +48,15 @@ public class AcitivityMainItemsList extends AppCompatActivity{
                 finish();
             }
         });
+        //run the edit activity
         /*
-        ItemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        itemsRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
             {
                 Intent previousIntent = getIntent();
-                Item selected = (Item) ItemsListView.getItemAtPosition(position);
+                Item selected = (Item) itemsRecyclerView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), AcitivityEditItem.class);
                 intent.putExtra(Item.ITEM_EDIT_EXTRA, selected.getID());
                 int passedTripID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);

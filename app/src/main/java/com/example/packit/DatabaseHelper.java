@@ -174,15 +174,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 JUNCTION_ITEM_ID + "=?",
                 new String[]{String.valueOf(ItemID)});
         db.close();
-    }/*
-    public void deleteAllJunctionsWithTag(int TagID)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_JUNCTION,
-                JUNCTION_TAG_ID + "=?",
-                new String[]{String.valueOf(TagID)});
-        db.close();
-    }*/
+    }
     public void deleteJunction(Item item, Tag tag) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_JUNCTION,
@@ -291,6 +283,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
     public boolean isItemInTag(Item item, Tag tag) {
+        if(item == null) {return false;}
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor result = db.rawQuery("SELECT * "
                         + " FROM " + TABLE_JUNCTION

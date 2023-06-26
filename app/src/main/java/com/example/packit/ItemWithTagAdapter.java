@@ -25,7 +25,6 @@ public class ItemWithTagAdapter extends RecyclerView.Adapter<ItemWithTagAdapter.
         this.appContext = context;
         this.db = DatabaseHelper.instanceOfDatabase(appContext);
         this.selectedTag = tag;
-        //this.activity = activity;
     }
 
     @NonNull
@@ -47,7 +46,6 @@ public class ItemWithTagAdapter extends RecyclerView.Adapter<ItemWithTagAdapter.
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    //selectedTag.TagItemsArrayList.remove(item);
                     items.remove(item);
                     notifyItemRemoved(position);
                     db.deleteJunction(item, selectedTag);
