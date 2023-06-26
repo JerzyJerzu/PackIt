@@ -46,9 +46,9 @@ public class TagChooseAdapter extends RecyclerView.Adapter<TagChooseAdapter.View
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-
+                    db.addJunction(tag, item);
                 } else {
-
+                    db.deleteJunction(item, tag);
                 }
             }
         });

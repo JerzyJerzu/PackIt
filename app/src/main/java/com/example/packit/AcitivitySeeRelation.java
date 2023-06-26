@@ -88,7 +88,7 @@ public class AcitivitySeeRelation extends AppCompatActivity{
         ItemWithTagAdapter itemsAdapter = new ItemWithTagAdapter(getApplicationContext(), selectedTag.TagItemsArrayList);
         ItemsListView.setAdapter(itemsAdapter);
 */
-        ItemWithTagAdapter itemsAdapter = new ItemWithTagAdapter(getApplicationContext(), selectedTrip.TripItemsArrayList, selectedTag);
+        ItemWithTagAdapter itemsAdapter = new ItemWithTagAdapter(getApplicationContext(), selectedTag.TagItemsArrayList, selectedTag);
         ItemsRecyclerView.setAdapter(itemsAdapter);
     }
     @Override

@@ -47,7 +47,7 @@ public class ItemWithTagAdapter extends RecyclerView.Adapter<ItemWithTagAdapter.
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    selectedTag.TagItemsArrayList.remove(item);
+                    //selectedTag.TagItemsArrayList.remove(item);
                     items.remove(item);
                     notifyItemRemoved(position);
                     db.deleteJunction(item, selectedTag);

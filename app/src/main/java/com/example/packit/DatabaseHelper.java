@@ -35,12 +35,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String ITEM_NAME = "name";
     private static final String ITEM_DESCRIPTION = "description";
     private static final String ITEM_CHECKED = "checked";
-    public DatabaseHelper(Context context)
-    {
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-    public static DatabaseHelper instanceOfDatabase(Context context)
-    {
+    public static DatabaseHelper instanceOfDatabase(Context context) {
         if(dbHelper == null)
         {
             dbHelper = new DatabaseHelper(context);
@@ -52,8 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         initialiseTables(db);
     }
-    private void initialiseTables(SQLiteDatabase db)
-    {
+    private void initialiseTables(SQLiteDatabase db) {
         String createTableQuery = "CREATE TABLE " + TABLE_TRIPS + "("
                 + TRIPS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + TRIPS_NAME + " TEXT" + ")";
@@ -92,17 +89,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createTableQuery);
     }
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
-    {
-
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
         db.execSQL("PRAGMA foreign_keys = ON;");
     }
-    public void addtrip(Trip trip)
-    {
+    public void addtrip(Trip trip) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TRIPS_ID, trip.getID());
@@ -110,8 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.insert(TABLE_TRIPS, null, values);
     }
-    public void addNewTag(Tag tag)
-    {
+    public void addNewTag(Tag tag) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TAG_ID, tag.getID());
@@ -121,8 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.insert(TABLE_TAGS, null, values);
     }
-    public void addJunction(Tag tag, Item item)
-    {
+    public void addJunction(Tag tag, Item item) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(JUNCTION_TAG_ID, tag.getID());
@@ -130,8 +122,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.insert(TABLE_JUNCTION, null, values);
     }
-    public void addNewItem(Item item)
-    {
+    public void addNewItem(Item item) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ITEM_ID, item.getID());
@@ -142,17 +133,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.insert(TABLE_ITEMS, null, values);
     }
-    public void updateTripInDB(Trip selectedTrip)
-    {
+    public void updateTripInDB(Trip selectedTrip) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //values.put(TRIPS_ID, selectedTrip.getID()); //puts the same ID in the same place
         values.put(TRIPS_NAME, selectedTrip.toString());
 
         db.update(TABLE_TRIPS, values, TRIPS_ID + " =? ", new String[]{String.valueOf(selectedTrip.getID())});
     }
-    public void UpdateTagInDB(Tag tag)
-    {
+    public void UpdateTagInDB(Tag tag) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TAG_NAME, tag.getName());
@@ -160,8 +148,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.update(TABLE_TAGS, values, TAG_ID + " =? ", new String[]{String.valueOf(tag.getID())});
     }
-    public void UpdateItemInDB(Item item)
-    {
+    public void UpdateItemInDB(Item item) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ITEM_NAME, item.getName());
@@ -170,20 +157,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.update(TABLE_ITEMS, values, ITEM_ID + " =? ", new String[]{String.valueOf(item.getID())});
     }
-    public void deleteTrip(Trip selectedTrip)
-    {
+    public void deleteTrip(Trip selectedTrip) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TRIPS, TRIPS_ID + "=?", new String[]{String.valueOf(selectedTrip.getID())});
         db.close();
     }
-    public void deleteTag(Tag tag)
-    {
+    public void deleteTag(Tag tag) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TAGS, TAG_ID + "=?", new String[]{String.valueOf(tag.getID())});
         db.close();
     }
-    public void deleteAllJunctionsWithItem(int ItemID)
-    {
+    public void deleteAllJunctionsWithItem(Item item) {
+        int ItemID = item.getID();
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_JUNCTION,
                 JUNCTION_ITEM_ID + "=?",
@@ -198,22 +183,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(TagID)});
         db.close();
     }*/
-    public void deleteJunction(Item item, Tag tag)
-    {
+    public void deleteJunction(Item item, Tag tag) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_JUNCTION,
                 JUNCTION_ITEM_ID + "=? AND " + JUNCTION_TAG_ID + "=?",
                 new String[]{String.valueOf(item.getID()),String.valueOf(tag.getID())});
         db.close();
     }
-    public void deleteItem(Item item)
-    {
+    public void deleteItem(Item item) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_ITEMS, ITEM_ID + "=?", new String[]{String.valueOf(item.getID())});
         db.close();
     }
-    public void populateTripsListArray()
-    {
+    public void populateTripsListArray() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor result = db.rawQuery("SELECT * FROM " + TABLE_TRIPS, null);;
 
@@ -228,8 +210,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
     }
-    public void populateTripItemsListArray(Trip trip)
-    {
+    public void populateTripItemsListArray(Trip trip) {
         trip.TripItemsArrayList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor result = db.rawQuery("SELECT * FROM "
@@ -252,8 +233,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
     }
-    public void populateTripTagsArrayList(Trip trip)
-    {
+    public void populateTripTagsArrayList(Trip trip) {
         trip.TripTagsArrayList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor result = db.rawQuery("SELECT *"
@@ -275,16 +255,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
     }
-    public void populateTagItemsArrayList(Tag tag)
-    {
+    public void populateTagItemsArrayList(Tag tag) {
         tag.TagItemsArrayList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_ITEMS, null);;
-
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append("SELECT ");
+        queryBuilder.append(TABLE_ITEMS + "." + ITEM_ID + ", ");
+        queryBuilder.append(TABLE_ITEMS + "." + ITEM_TRIP_ID + ", ");
+        queryBuilder.append(TABLE_ITEMS + "." + ITEM_NAME + ", ");
+        queryBuilder.append(TABLE_ITEMS + "." + ITEM_DESCRIPTION + ", ");
+        queryBuilder.append(TABLE_ITEMS + "." + ITEM_CHECKED + " ");
+        queryBuilder.append("FROM " + TABLE_ITEMS);
+        queryBuilder.append(" JOIN " + TABLE_JUNCTION);
+        queryBuilder.append(" ON " + TABLE_JUNCTION + "." + JUNCTION_ITEM_ID + "=" + TABLE_ITEMS + "." + ITEM_ID);
+        queryBuilder.append(" JOIN " + TABLE_TAGS);
+        queryBuilder.append(" ON " + TABLE_JUNCTION + "." + JUNCTION_TAG_ID + "=" + TABLE_TAGS + "." + TAG_ID);
+        queryBuilder.append(" WHERE " + TABLE_TAGS + "." + TAG_ID + " = " + tag.getID());
+        String longQuery = queryBuilder.toString();
+        Cursor result = db.rawQuery(longQuery,null);
         if(result.getCount() != 0)
         {
             while(result.moveToNext())
             {
+                Log.i("TagItemsList", "new item added");
                 int id = result.getInt(0);
                 int idtrip = result.getInt(1);
                 String name = result.getString(2);
@@ -297,8 +290,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
     }
-
     public boolean isItemInTag(Item item, Tag tag) {
-        return false;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.rawQuery("SELECT * "
+                        + " FROM " + TABLE_JUNCTION
+                        + " WHERE " + JUNCTION_TAG_ID + " = "+tag.getID()
+                        + " AND " + JUNCTION_ITEM_ID + " = "+item.getID(),
+                null);
+        if (result.getCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

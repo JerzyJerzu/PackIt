@@ -49,6 +49,8 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.View
                 if (isChecked) {
                     item.setChecked(true);
                     db.UpdateItemInDB(item);
+                    //IKD if I should add that feature or not...
+                    //db.deleteAllJunctionsWithItem(item);
                 } else {
                     item.setChecked(false);
                     db.UpdateItemInDB(item);
