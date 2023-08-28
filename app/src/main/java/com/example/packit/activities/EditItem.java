@@ -18,7 +18,7 @@ import com.example.packit.adapters.TagChooseAdapter;
 import com.example.packit.classes.Trip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class AcitivityEditItem extends AppCompatActivity {
+public class EditItem extends AppCompatActivity {
     private Button ApplyItem;
     private Button DeleteItem;
     private FloatingActionButton back2tripI;

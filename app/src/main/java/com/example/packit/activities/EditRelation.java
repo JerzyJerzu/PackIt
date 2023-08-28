@@ -13,7 +13,7 @@ import com.example.packit.R;
 import com.example.packit.classes.Tag;
 import com.example.packit.classes.Trip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-public class AcitivityEditRelation extends AppCompatActivity{
+public class EditRelation extends AppCompatActivity{
     private Button applyRelation;
     private FloatingActionButton back2tripR;
     private EditText Editname;

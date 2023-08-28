@@ -18,7 +18,7 @@ import com.example.packit.classes.Tag;
 import com.example.packit.adapters.TagAdapter;
 import com.example.packit.classes.Trip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-public class AcitivityInsideTrip extends AppCompatActivity{
+public class InsideTrip extends AppCompatActivity{
     private FloatingActionButton back;
     private Button newItem;
     private Button newRelation;
@@ -58,7 +58,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
             public void onClick(View view) {
                 Intent previousIntent = getIntent();
                 int passedID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
-                Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityEditTrip.class);
+                Intent intent = new Intent(InsideTrip.this, EditTrip.class);
                 intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedID);
                 startActivity(intent);
             }
@@ -68,7 +68,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
             public void onClick(View view) {
                 Intent previousIntent = getIntent();
                 int passedID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
-                Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityEditRelation.class);
+                Intent intent = new Intent(InsideTrip.this, EditRelation.class);
                 intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedID);
                 startActivity(intent);
             }
@@ -78,7 +78,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
             public void onClick(View view) {
                 Intent previousIntent = getIntent();
                 int passedID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
-                Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityMainItemsList.class);
+                Intent intent = new Intent(InsideTrip.this, MainItemsList.class);
                 intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedID);
                 startActivity(intent);
             }
@@ -88,7 +88,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
             public void onClick(View view) {
                 Intent previousIntent = getIntent();
                 int passedID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
-                Intent intent = new Intent(AcitivityInsideTrip.this, AcitivityEditItem.class);
+                Intent intent = new Intent(InsideTrip.this, EditItem.class);
                 intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedID);
                 startActivity(intent);
             }
@@ -112,7 +112,7 @@ public class AcitivityInsideTrip extends AppCompatActivity{
             {
                 Intent previousIntent = getIntent();
                 Tag selected = (Tag) TagsListView.getItemAtPosition(position);
-                Intent intent = new Intent(getApplicationContext(), AcitivitySeeRelation.class);
+                Intent intent = new Intent(getApplicationContext(), SeeRelation.class);
                 intent.putExtra(Tag.TAG_EDIT_EXTRA, selected.getID());
                 int passedTripID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
                 intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedTripID);

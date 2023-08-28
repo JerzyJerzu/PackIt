@@ -12,7 +12,7 @@ import com.example.packit.database_managing.DatabaseHelper;
 import com.example.packit.R;
 import com.example.packit.classes.Trip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-public class AcitivityEditTrip extends AppCompatActivity {
+public class EditTrip extends AppCompatActivity {
     private Button ApplyTrip;
     private FloatingActionButton back2tripT;
     private EditText Editname;

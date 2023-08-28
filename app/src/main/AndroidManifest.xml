@@ -13,7 +13,7 @@
         android:theme="@style/Theme.PackIt"
         tools:targetApi="31">
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".activities.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,12 +22,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.AcitivityEditTrip" />
-        <activity android:name=".activities.AcitivityEditItem" />
-        <activity android:name=".activities.AcitivityEditRelation" />
-        <activity android:name=".activities.AcitivityInsideTrip" />
-        <activity android:name=".activities.AcitivitySeeRelation" />
-        <activity android:name=".activities.AcitivityMainItemsList" />
+        <activity android:name=".activities.EditTrip" />
+        <activity android:name=".activities.EditItem" />
+        <activity android:name=".activities.EditRelation" />
+        <activity android:name=".activities.InsideTrip" />
+        <activity android:name=".activities.SeeRelation" />
+        <activity android:name=".activities.MainItemsList" />
     </application>
 
 </manifest>

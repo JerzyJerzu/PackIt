@@ -18,7 +18,7 @@ import com.example.packit.R;
 import com.example.packit.views_helpers.RecyclerItemTouchHelper;
 import com.example.packit.classes.Trip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-public class AcitivityMainItemsList extends AppCompatActivity{
+public class MainItemsList extends AppCompatActivity{
 
     private FloatingActionButton back;
     private RecyclerView itemsRecyclerView;
@@ -97,7 +97,7 @@ public class AcitivityMainItemsList extends AppCompatActivity{
     {
         Intent previousIntent = getIntent();
         Item selected = (Item) itemsAdapter.getItem(position);
-        Intent intent = new Intent(getApplicationContext(), AcitivityEditItem.class);
+        Intent intent = new Intent(getApplicationContext(), EditItem.class);
         intent.putExtra(Item.ITEM_EDIT_EXTRA, selected.getID());
         int passedTripID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
         intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedTripID);

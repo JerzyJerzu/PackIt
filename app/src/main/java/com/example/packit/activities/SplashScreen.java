@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.packit.R;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashScreen extends AppCompatActivity {
 
     private static final int SPLASH_DURATION = 3000; // Splash screen duration in milliseconds
 
@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 // Once the background work is complete, start the main activity
 
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
 
                 startActivity(intent);
                 finish();

@@ -4,13 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.packit.activities.AcitivityMainItemsList;
+import com.example.packit.activities.MainItemsList;
 import com.example.packit.adapters.ItemCheckAdapter;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     private ItemCheckAdapter adapter;
-    private AcitivityMainItemsList activity;
-    public RecyclerItemTouchHelper(ItemCheckAdapter adapter, AcitivityMainItemsList activity) {
+    private MainItemsList activity;
+    public RecyclerItemTouchHelper(ItemCheckAdapter adapter, MainItemsList activity) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
 
         this.activity = activity;

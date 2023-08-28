@@ -19,7 +19,7 @@ import com.example.packit.R;
 import com.example.packit.classes.Tag;
 import com.example.packit.classes.Trip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-public class AcitivitySeeRelation extends AppCompatActivity{
+public class SeeRelation extends AppCompatActivity{
 
     private FloatingActionButton back;
     private Button edit;
@@ -78,7 +78,7 @@ public class AcitivitySeeRelation extends AppCompatActivity{
                 Intent previousIntent = getIntent();
                 int passedTripID = previousIntent.getIntExtra(Trip.TRIP_EDIT_EXTRA, -1);
                 int passedTagID = previousIntent.getIntExtra(Tag.TAG_EDIT_EXTRA, -1);
-                Intent intent = new Intent(AcitivitySeeRelation.this, AcitivityEditRelation.class);
+                Intent intent = new Intent(SeeRelation.this, EditRelation.class);
                 intent.putExtra(Trip.TRIP_EDIT_EXTRA, passedTripID);
                 intent.putExtra(Tag.TAG_EDIT_EXTRA, passedTagID);
                 startActivity(intent);

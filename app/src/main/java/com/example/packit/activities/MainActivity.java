@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
             {
                 Trip selectedTrip = (Trip) TripsListView.getItemAtPosition(position);
-                Intent editTripIntent = new Intent(getApplicationContext(), AcitivityInsideTrip.class);
+                Intent editTripIntent = new Intent(getApplicationContext(), InsideTrip.class);
                 editTripIntent.putExtra(Trip.TRIP_EDIT_EXTRA, selectedTrip.getID());
                 startActivity(editTripIntent);
             }
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(MainActivity.this, AcitivityEditTrip.class);
+                Intent intent = new Intent(MainActivity.this, EditTrip.class);
                 startActivity(intent);
             }
         });
