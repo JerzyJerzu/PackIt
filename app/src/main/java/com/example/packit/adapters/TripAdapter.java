@@ -1,4 +1,4 @@
-package com.example.packit;
+package com.example.packit.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,26 +10,29 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.packit.R;
+import com.example.packit.classes.Trip;
+
 import java.util.List;
 
-public class TagAdapter extends ArrayAdapter<Tag>
+public class TripAdapter extends ArrayAdapter<Trip>
 {
-    public TagAdapter(Context context, List<Tag> tags)
+    public TripAdapter(Context context, List<Trip> trips)
     {
-        super(context, 0, tags);
+        super(context, 0, trips);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
     {
-        Tag tag = getItem(position);
+        Trip trip = getItem(position);
         if(convertView == null)
         {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.trip_cell, parent, false);
         }
         TextView name = convertView.findViewById(R.id.TripName);
-        name.setText(tag.getName());
+        name.setText(trip.toString());
 
         return convertView;
     }

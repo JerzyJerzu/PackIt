@@ -1,21 +1,23 @@
-package com.example.packit;
+package com.example.packit.activities;
 
 import android.content.DialogInterface;
 import android.util.Log;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.packit.database_managing.DatabaseHelper;
+import com.example.packit.adapters.ItemWithTagAdapter;
+import com.example.packit.R;
+import com.example.packit.classes.Tag;
+import com.example.packit.classes.Trip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class AcitivitySeeRelation extends AppCompatActivity{
 

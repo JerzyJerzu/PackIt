@@ -1,4 +1,4 @@
-package com.example.packit;
+package com.example.packit.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +11,12 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.packit.database_managing.DatabaseHelper;
+import com.example.packit.R;
+import com.example.packit.classes.Tag;
+import com.example.packit.adapters.TagAdapter;
+import com.example.packit.classes.Trip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class AcitivityInsideTrip extends AppCompatActivity{
     private FloatingActionButton back;

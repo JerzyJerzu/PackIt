@@ -1,4 +1,4 @@
-package com.example.packit;
+package com.example.packit.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.packit.database_managing.DatabaseHelper;
+import com.example.packit.R;
+import com.example.packit.classes.Item;
 
 import java.util.List;
 

@@ -1,32 +1,34 @@
-package com.example.packit;
+package com.example.packit.adapters;
 
+        import android.annotation.SuppressLint;
         import android.content.Context;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.CheckBox;
         import android.widget.CompoundButton;
-        import android.widget.TextView;
 
         import androidx.annotation.NonNull;
         import androidx.recyclerview.widget.RecyclerView;
 
-        import java.util.ArrayList;
+        import com.example.packit.database_managing.DatabaseHelper;
+        import com.example.packit.R;
+        import com.example.packit.classes.Item;
+        import com.example.packit.classes.Tag;
+
         import java.util.List;
 
-public class TagChooseAdapter extends RecyclerView.Adapter<TagChooseAdapter.ViewHolder> {
-    private List<Tag> tags;
-    public List<Tag> TempSelectedTags;
+public class ItemWithTagAdapter extends RecyclerView.Adapter<ItemWithTagAdapter.ViewHolder> {
+    private List<Item> items;
     private DatabaseHelper db;
     private Context appContext;
-    private Item item;
+    private Tag selectedTag;
 
-    public TagChooseAdapter(Context context, List<Tag> Tags, Item selectedItem) {
-        this.tags = Tags;
+    public ItemWithTagAdapter(Context context, List<Item> Items, Tag tag) {
+        this.items = Items;
         this.appContext = context;
         this.db = DatabaseHelper.instanceOfDatabase(appContext);
-        this.item = selectedItem;
-        this.TempSelectedTags = new ArrayList<Tag>();
+        this.selectedTag = tag;
     }
 
     @NonNull
@@ -37,30 +39,27 @@ public class TagChooseAdapter extends RecyclerView.Adapter<TagChooseAdapter.View
         return new ViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        //db.openDatabase();
 
-        final Tag tag = tags.get(position);
-        holder.checkBox.setText(tag.getName());
+        final Item item = items.get(position);
+        holder.checkBox.setText(item.getName());
 
-        holder.checkBox.setChecked(db.isItemInTag(item,tag));
+        holder.checkBox.setChecked(false);
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if(item != null) {db.addJunction(tag, item);}
-                    else {TempSelectedTags.add(tag);}
-                } else {
-                    db.deleteJunction(item, tag);
-                    if(item != null) {db.deleteJunction(item, tag);}
-                    else {TempSelectedTags.remove(tag);}
+                    items.remove(item);
+                    notifyItemRemoved(position);
+                    db.deleteJunction(item, selectedTag);
                 }
             }
         });
     }
     @Override
     public int getItemCount() {
-        return tags.size();
+        return items.size();
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         CheckBox checkBox;

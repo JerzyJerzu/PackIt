@@ -1,18 +1,21 @@
-package com.example.packit;
+package com.example.packit.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.packit.database_managing.DatabaseHelper;
+import com.example.packit.classes.Item;
+import com.example.packit.R;
+import com.example.packit.classes.Tag;
+import com.example.packit.adapters.TagChooseAdapter;
+import com.example.packit.classes.Trip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AcitivityEditItem extends AppCompatActivity {

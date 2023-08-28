@@ -1,4 +1,4 @@
-package com.example.packit;
+package com.example.packit.classes;
 
 import java.util.ArrayList;
 

@@ -1,9 +1,11 @@
-package com.example.packit;
+package com.example.packit.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.packit.R;
 
 public class SplashActivity extends AppCompatActivity {
 

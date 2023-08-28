@@ -1,4 +1,4 @@
-package com.example.packit;
+package com.example.packit.database_managing;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.example.packit.classes.Item;
+import com.example.packit.classes.Tag;
+import com.example.packit.classes.Trip;
 
 import java.util.ArrayList;
 
@@ -189,7 +193,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void populateTripsListArray() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_TRIPS, null);;
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_TRIPS, null);
 
         if(result.getCount() != 0)
         {
@@ -201,6 +205,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Trip.tripsArrayList.add(trip);
             }
         }
+        result.close();
     }
     public void populateTripItemsListArray(Trip trip) {
         trip.TripItemsArrayList = new ArrayList<>();
@@ -224,6 +229,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 trip.TripItemsArrayList.add(n);
             }
         }
+        result.close();
     }
     public void populateTripTagsArrayList(Trip trip) {
         trip.TripTagsArrayList = new ArrayList<>();
@@ -246,6 +252,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 trip.TripTagsArrayList.add(n);
             }
         }
+        result.close();
     }
     public void populateTagItemsArrayList(Tag tag) {
         tag.TagItemsArrayList = new ArrayList<>();
@@ -281,6 +288,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 tag.TagItemsArrayList.add(n);
             }
         }
+        result.close();
     }
     public boolean isItemInTag(Item item, Tag tag) {
         if(item == null) {return false;}
@@ -290,10 +298,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + " WHERE " + JUNCTION_TAG_ID + " = "+tag.getID()
                         + " AND " + JUNCTION_ITEM_ID + " = "+item.getID(),
                 null);
-        if (result.getCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        result.close();
+        return result.getCount() > 0;
     }
 }
